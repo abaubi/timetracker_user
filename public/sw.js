@@ -1,9 +1,10 @@
-const CACHE_NAME = 'timetracker-v1';
+const CACHE_NAME = 'timetracker-v2';
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon.svg'
+  '/icon.svg',
+  '/icon.jpg'
 ];
 
 self.addEventListener('install', (e) => {
