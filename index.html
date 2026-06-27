@@ -198,6 +198,13 @@
         document.getElementById("app-container").style.display = "block";
         document.getElementById("user-email").textContent = user.email;
         
+        const savedTab = localStorage.getItem('activeTab');
+        if (savedTab === 'firebaseconfig') {
+          window.switchTab('timers');
+        } else if (savedTab) {
+          window.switchTab(savedTab);
+        }
+        
         await window.loadFirebaseData();
       } else {
         window.currentUser = null;
@@ -318,7 +325,6 @@
       <button class="tab-btn" onclick="switchTab('history')">Historial de Sessions</button>
       <button class="tab-btn" onclick="switchTab('stats')">Estadístiques</button>
       <button class="tab-btn" onclick="switchTab('projects')">Projectes i Tasques</button>
-      <button class="tab-btn" onclick="switchTab('firebaseconfig')">⚙️ Configurar Firebase</button>
     </div>
 
     <!-- TIMERS TAB -->
@@ -1777,7 +1783,13 @@ service cloud.firestore {
 
     applyTheme(currentTheme);
     const savedTab = localStorage.getItem('activeTab');
-    if (savedTab) window.switchTab(savedTab);
+    if (savedTab) {
+      if (savedTab === 'firebaseconfig' && window.currentUser) {
+        window.switchTab('timers');
+      } else {
+        window.switchTab(savedTab);
+      }
+    }
     render();
     window.render = render;
     document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
